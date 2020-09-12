@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            #aa{
+                display: flex;
+                flex-direction: row;
+                justify-content: space-evenly;
+                width: 400px;
+                
+                
+            }
+            body{
+                background-image: url(bimg.jpg);
+                background-attachment: fixed;
+            }
+            #ab{
+                display: flex;
+                flex-direction: row;
+                margin: 100px auto;
+                width: 80%;
+                flex-wrap: wrap;
+                justify-content: space-evenly;
+                background-color: rgba(255,255,255,0.7);
+                
+            }
+        </style>
+    </head>
+    <body>
+        <div id="aa">
+            <button id="b1" onclick="book()">All Books</button>
+            <button id="b1" onclick="author()">Search for author</button>
+            <button id="b1" onclick='ide()'>Search by id</button>
+            <button id="b1" onclick='add()'>Add Books</button>
+        </div>
+        <div id="ab">
+
+        </div>
+        <script>
+
+            len =async()=>{
+                res=await fetch('http://127.0.0.1:3000/length')
+                data=await res.text()
+                m=parseInt(data)
+                return m
+            }
+
+
+            author=async()=>{
+                div=document.getElementById('ab')
+                div.innerHTML=''
+                div.innerHTML='<input id="in" type="Text" placeholder="type author name"><button id="bb" onclick="done1()"> Done </button>'
+                var ini = document.getElementById('in')
+                ini.style.width='100px'
+                ini.style.margin='5px auto'
+                var bub = document.getElementById('bb')
+                bub.style.width='auto'
+                bub.style.margin='10px auto'
+            }
+
+            done1=async()=>{
+                var lis=document.getElementById('in')
+                var div=document.getElementById('ab')
+                div.innerHTML=''
+                var a=lis.value
+                res = await fetch(`http://127.0.0.1:3000/author?author=${a}`)
+                data=await res.json()
+                data.forEach(element => {
+                        var li=document.createElement('h1')
+                        li.innerHTML=`ID : ${element.id}`
+                        li.style.transformStyle = "preserve-3d";
+                        
+                        var li2=document.createElement('h2')
+                        li2.innerHTML=`NAME : ${element.name}`
+                        li2.style.transformStyle = "preserve-3d";
+                    
+                        var li3=document.createElement('h2')
+                        li3.innerHTML=`Author Name : ${element.author}`
+                        li3.style.transformStyle = "preserve-3d";
+                        
+                        var div2=document.createElement('div')
+                        div2.style.boxShadow = "10px 20px 30px silver";
+                        div2.style.height='400px'
+                        div2.style.opacity='1'
+                        div2.style.width='350px'
+                        div2.style.backgroundColor='whitesmoke'
+                        div2.style.color='Grey'
+                        div2.style.marginTop='100px'
+                        div2.style.display='flex'
+                        div2.style.flexDirection='column'
+                        div2.style.alignContent='center'
+                        div2.appendChild(li)
+                        div2.appendChild(li2)
+                        div2.appendChild(li3)
+                        div.appendChild(div2)
+                    });
+                
+            }
+        
+            book=async()=>{
+                div=document.getElementById('ab')
+                div.innerHTML=''
+                    var request=await fetch('http://127.0.0.1:3000/books')
+                    data=await request.json()  
+                    let a=[]
+                    data.forEach(element => {
+                        var li=document.createElement('h1')
+                        li.innerHTML=`ID : ${element.id}`
+                        li.style.transformStyle = "preserve-3d";
+                        
+                        var li2=document.createElement('h2')
+                        li2.innerHTML=`NAME : ${element.name}`
+                        li2.style.transformStyle = "preserve-3d";
+                    
+                        var li3=document.createElement('h2')
+                        li3.innerHTML=`Author Name : ${element.author}`
+                        li3.style.transformStyle = "preserve-3d";
+                        
+                        var div2=document.createElement('div')
+                        div2.style.boxShadow = "10px 20px 30px silver";
+                        div2.style.height='400px'
+                        div2.style.opacity='1'
+                        div2.style.width='350px'
+                        div2.style.backgroundColor='whitesmoke'
+                        div2.style.color='Grey'
+                        div2.style.marginTop='100px'
+                        div2.style.display='flex'
+                        div2.style.flexDirection='column'
+                        div2.style.alignContent='center'
+                        div2.appendChild(li)
+                        div2.appendChild(li2)
+                        div2.appendChild(li3)
+                        div.appendChild(div2)
+                    });
+                }
+
+            ide=async()=>{
+                div=document.getElementById('ab')
+                div.innerHTML=''
+                div.innerHTML='<input id="in" type="Text" placeholder="type id of a name"><button id="bb" onclick="done()"> Done </button>'
+                var ini = document.getElementById('in')
+                ini.style.width='100px'
+                ini.style.margin='5px auto'
+                var bub = document.getElementById('bb')
+                bub.style.width='auto'
+                bub.style.margin='10px auto'
+
+            }
+
+            done=async()=>{
+                var lis=document.getElementById('in')
+                var div=document.getElementById('ab')
+                div.innerHTML=''
+                var a=lis.value
+                res = await fetch(`http://127.0.0.1:3000/booksbyid?id=${a}`)
+                element=await res.json()
+                console.log(element)
+                var li=document.createElement('h1')
+                li.innerHTML=`ID : ${element.id}`
+                li.style.transformStyle = "preserve-3d";
+                        
+                var li2=document.createElement('h2')
+                li2.innerHTML=`NAME : ${element.name}`
+                li2.style.transformStyle = "preserve-3d";
+                    
+                var li3=document.createElement('h2')
+                li3.innerHTML=`Author Name : ${element.author}`
+                li3.style.transformStyle = "preserve-3d";
+                        
+                var div2=document.createElement('div')
+                div2.style.boxShadow = "10px 20px 30px silver";
+                div2.style.height='400px'
+                div2.style.opacity='1'
+                div2.style.width='350px'
+                div2.style.backgroundColor='whitesmoke'
+                div2.style.color='Grey'
+                div2.style.marginTop='100px'
+                div2.style.display='flex'
+                div2.style.flexDirection='column'
+                div2.style.alignContent='center'
+                div2.appendChild(li)
+                div2.appendChild(li2)
+                div2.appendChild(li3)
+                div.appendChild(div2)
+                
+                
+            }
+
+
+            add=async()=>{
+                div=document.getElementById('ab')
+                div.innerHTML=''
+                div.innerHTML='<input type="text" id="in" placeholder ="Book Name"><input type="text" id="in2" placeholder ="Author Name"><button id="but" onclick="ad()">add</button>'
+                var ini = document.getElementById('in')
+                ini.style.width='400px'
+                ini.style.margin='5px auto'
+                var iin = document.getElementById('in2')
+                iin.style.width='400px'
+                iin.style.margin='5px auto'
+                var bub = document.getElementById('but')
+                bub.style.width='100px'
+                bub.style.margin='10px auto'
+            
+            }
+
+            ad=async()=>{
+                var li=document.getElementById('in')
+                var a=li.value
+                var li2=document.getElementById('in2')
+                var b=li2.value
+                if(a==undefined||b==undefined){
+                    alert('Give proper information')
+                }
+                else{
+                    var le=await len()
+                    book={
+                        id:le+1,
+                        name:a,
+                        author:b
+                    }
+                    console.log(book)
+                res=await fetch('http://127.0.0.1:3000/add',{
+                    method:'POST',
+                    headers:{
+                        'Content-Type': 'application/json',
+                    },
+                    body:JSON.stringify(book)
+                }) 
+                div.innerHTML=''
+                var a=[]
+                data=await res.json()
+                data.forEach(element => {
+                        var li=document.createElement('h1')
+                        li.innerHTML=`ID : ${element.id}`
+                        li.style.transformStyle = "preserve-3d";
+                        
+                        var li2=document.createElement('h2')
+                        li2.innerHTML=`NAME : ${element.name}`
+                        li2.style.transformStyle = "preserve-3d";
+                    
+                        var li3=document.createElement('h2')
+                        li3.innerHTML=`Author Name : ${element.author}`
+                        li3.style.transformStyle = "preserve-3d";
+                        
+                        var div2=document.createElement('div')
+                        div2.style.boxShadow = "10px 20px 30px silver";
+                        div2.style.height='400px'
+                        div2.style.opacity='1'
+                        div2.style.width='350px'
+                        div2.style.backgroundColor='whitesmoke'
+                        div2.style.color='Grey'
+                        div2.style.marginTop='100px'
+                        div2.style.display='flex'
+                        div2.style.flexDirection='column'
+                        div2.style.alignContent='center'
+                        div2.appendChild(li)
+                        div2.appendChild(li2)
+                        div2.appendChild(li3)
+                        div.appendChild(div2)
+                    });
+
+
+                }
+
+            }
+                
+
+        </script>
+    </body>
+</html>
